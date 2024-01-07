@@ -143,11 +143,15 @@ def set_image(self):
 <p align="center"><img src="/image/y계산1.png" width="300"></p>
 <p align="center"><img src="/image/y계산2.png" width="300"></p>
 
+수직 거리 계산의 경우 기본적인 삼각비를 바탕으로 진행한다. 알고 있는 로봇의 목각도를 바탕으로 물체와 로봇간의 각도를 보정하여 구한다. 보정의 경우 수직 화각과 화면상 높이와 픽셀의 y좌표 값을 바탕으로 보정하여 계산한다.
+
 ```py
 prop_A = (const.CAMERA_WIDTH - cY) / const.CAMERA_WIDTH #Y_value perspective proortion
 distance_y = const.ROBOT_HEIGHT * math.tan(math.radians(const.ROBOT_ANGLE) - math.atan(-math.tan(math.radians(const.HEIGHT_FOV/2)*(2*prop_A - 1)))) #physical height distance of target
 ```
 실제 사용한 코드에서는 prop_A에서 const.CAMERA_WIDTH가 쓰였다. 이는 const.CAMERA_HEIGHT로 고쳐야 한다.
+
+<br/> 
 
 ### 수평 거리 계산
 수평 거리 계산은 로봇의 중앙에서 수평으로 얼만큼 떨어져 있는지를 계산한다.
@@ -157,12 +161,17 @@ distance_y = const.ROBOT_HEIGHT * math.tan(math.radians(const.ROBOT_ANGLE) - mat
 <p align="center"><img src="/image/x계산3.png" width="300"></p>
 <p align="center"><img src="/image/x계산4.png" width="300"></p>
 
+수평 거리 계산의 경우 임의의 소실선(소실점)이 있다고 가정하여 그로부터 구하고자 하는 점의 픽셀과 소실선으로 생기는 픽셀의 비율을 계산하고, 이를 이용해 픽셀상에서의 소실 점의 위치를 추정한다. 그다음 소실점을 한 꼭짓점으로 하는 삼각형의 닮음비를 이용
+하여 X 실제거리와 화면상의 거리의 비율을 구했고, 이를 이용해 화상의 픽셀을 실제거리로 변환하여 계산한다.
+
 ```py
 prop_B = 0.5 + 1/(2 * math.tan(math.radians(const.HEIGHT_FOV/2)) * math.tan(math.radians(const.ROBOT_ANGLE))) # vanishing point of X_value perspective proportion
 px_X = (prop_B * (const.CAMERA_WIDTH/2 - cX)) / (prop_B - 1 + cY/const.CAMERA_HEIGHT)
 prop_X = - (2 * px_X) / const.CAMERA_WIDTH # vanishing point of X_vaqlue projection proportion
 distance_x = (const.ROBOT_HEIGHT / math.cos(math.radians(const.ROBOT_ANGLE - const.HEIGHT_FOV/2))) * math.tan(math.radians(const.WIDTH_FOV/2)) * prop_X # physical height distance of target
 ```
+
+<br/> 
 
 ### 홀 거리 보정
 <p align="center"><img src="/image/화각보정1.png" width="300"></p>
