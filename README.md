@@ -46,7 +46,9 @@ distance_x = (const.ROBOT_HEIGHT / math.cos(math.radians(const.ROBOT_ANGLE - con
 
 ### 홀 거리 보정
 <p align="center"><img src="/image/화각보정1.png" width="300"></p>
+퍼팅하기 위한 자리에 위치하려는 경우,수평 거리를 많이 사용하게 된다. 우리의 알고리즘상 위의 사진과 같은 형태가 나오게 된다. 이런 상황에서는 왼쪽 화면은 쓰지 않게 된다. 따라서 수평화각의 절반(로봇기준으로 90도 - 수평화각/2)만큼 오른쪽으로 돌려 이를 막았다.
 <p align="center"><img src="/image/화각보정2.png" width="300"></p>
+고개를 돌리므로써 거리 값에 오차가 생겼으므로 보정을 해야 한다. 우리가 구해야 하는 것은 위의 그림에서 dist_x의 값이다. 구할수 있는 값은 x와 x'이므로 이를 통해 dist_x'을 추정하고 theta가 닮음에 의하여 수평화각의 절반이므로 삼각비를 통하여 dist_x값을 구하였다.
 '''py
 prop_B = 0.5 + 1/(2 * math.tan(math.radians(const.HEIGHT_FOV/2)) * math.tan(math.radians(const.ROBOT_ANGLE))) # vanishing point of X_value perspective proportion
 px_X = (prop_B * (const.CAMERA_WIDTH/2 - cX)) / (prop_B - 1 + cY/const.CAMERA_HEIGHT)
