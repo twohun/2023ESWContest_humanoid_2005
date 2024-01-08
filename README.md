@@ -16,7 +16,7 @@
 <br/>
 
 ## 파3, 파4 영상
-[![Video Label](http://img.youtube.com/vi/9GaBwrTASCs/0.jpg)](https://youtu.be/9GaBwrTASCs)
+[![Video Label](http://img.youtube.com/vi/oTRuxdpRajw/0.jpg)](https://youtu.be/oTRuxdpRajw)
 
 [![Video Label](http://img.youtube.com/vi/1el_z0uh7GU/0.jpg)](https://youtu.be/1el_z0uh7GU)
 
